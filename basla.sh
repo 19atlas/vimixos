@@ -1,1 +1,0 @@
-qemu-system-i386 -m 256M -device VGA,vgamem_mb=128 i386-bin/disk.bin
