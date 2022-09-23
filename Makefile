@@ -1,13 +1,10 @@
 elfgcc=toolchain/i386-elf/bin/i386-elf-gcc
 elfld=toolchain/i386-elf/bin/i386-elf-ld
+BUILD_DIR=i386-bin
 
 .PHONY: help
 help:
 	@printf "clean: derlenmişi temizler\nbuild: derler\nrun: dener/çalıştırır (sanal makinede)\n"
-
-.PHONY: clean
-clean:
-	rm -rvf i386-bin
 
 .PHONY: build
 build: $(clean)
@@ -29,6 +26,10 @@ build: $(clean)
 	dd if=i386-bin/boot.bin of=i386-bin/disk.bin conv=notrunc
 	mcopy -v -i i386-bin/disk.bin i386-bin/kernel.bin "::kernel.bin"
 	mcopy -v -i i386-bin/disk.bin i386-bin/main.bin "::main.bin"
+
+.PHONY: clean
+clean:
+	rm -rvf $(BUILD_DIR)/*
 
 .PHONY: run
 run:
