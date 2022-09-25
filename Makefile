@@ -10,6 +10,7 @@ help:
 build: $(clean)
 	export PATH=$PATH:/usr/local/i386elfgcc/bin
 	mkdir -pv i386-bin
+	@printf "\n\e[0;32m==> $(BUILD_DIR) e derleniyor..."
 	@nasm "src/i386/bootloader/stage1/stage1.asm" -f bin -o "i386-bin/stage1.bin"
 	@nasm "src/i386/bootloader/stage2/stage2.asm" -f elf -o "i386-bin/stage2.o"
 	@nasm "src/i386/kernel/kernel.asm" -f elf -o "i386-bin/kernel_asm.o"
