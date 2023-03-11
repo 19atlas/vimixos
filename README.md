@@ -1,13 +1,12 @@
-# vimixos The 32 bit os
-## Derlemek için toolchain klasörüne girin,
+# vimixos
+i386 mimarili minimal OS
+## Derlemek için tools klasörüne girin,
 ### küçük not: Fedora, Gentoo, Debian tabanlı veya arch tabanlı sistemlerde denenmiştir.
-- ardından toolchain dosyasını çalıştırın ilk olarak gereken dosyaları indirilir, bu dosyalar olmazsa **DERLEYEMEZSİNİZ!**
+- ardından toolchain dosyasını çalıştırın derleyiciyi kuracaktır.
 - dosyalar indiğinde ana klasorumuze gelip "make clean build" komutunu çalıştırın.
-- eğer hata çıkmadıysa,
-- [X] artık vimixOS'u **derlediniz**!!!
 
 ## Sıra çalıştırmada!
-- öncelikle gereken paketleri kurmalısınız `qemu` paketi gibi [daha fazla bilgi için](https://github.com/nanobyte-dev/nanobyte_os#building)
+- öncelikle gereken paketleri kurmalısınız `qemu-full` `qemu-headless-arch-extra` paketi gibi [daha fazla bilgi için](https://github.com/nanobyte-dev/nanobyte_os#building)
 - [X] ana dizinde "make run" komutunu çalıştırın.
 
 ## Vimixos hedefleri:
@@ -19,11 +18,11 @@
 
 ## eklenmesi gerekenler:
 - [ ] C++ desteği
-- [ ] UNIX-like olmasi gerek
+- [ ] UNIX-like
 
 ## Vimixos dizinleri
 - `i386-bin` vimixos derlendikten sonra çıktıyı buraya atar
 - `src/i386` vimixos kaynağı
 - `src/i386/kernel` viniz kerneli burda bulunur
 - `src/i386/bootloader` vimixos bootloader
-- `toolchain` klasorundeki `toolchain` dosyası vimixosa uygun binutilsi indirir
+- `tools` klasorundeki `toolchain` dosyası vimixos'a uygun binutils indirir

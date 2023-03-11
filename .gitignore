@@ -1,4 +1,5 @@
 bin/
 *.o
 *.out
+i386-bin/
 Mkfile.old

@@ -1,5 +1,5 @@
-elfgcc=toolchain/i386-elf/bin/i386-elf-gcc
-elfld=toolchain/i386-elf/bin/i386-elf-ld
+elfgcc=tools/i386-elf/bin/i386-elf-gcc
+elfld=tools/i386-elf/bin/i386-elf-ld
 BUILD_DIR=i386-bin
 
 .PHONY: help

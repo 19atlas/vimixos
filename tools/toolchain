@@ -72,6 +72,7 @@ if [ "$OPERATION" = "build" ]; then
     make -j8 all-gcc all-target-libgcc
     make install-gcc install-target-libgcc
     popd
+    rm *.tar.xz
     rm ./toolchain
 
 elif [ "$OPERATION" = "clean" ]; then
