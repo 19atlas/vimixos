@@ -15,9 +15,9 @@
 
 //main function
 extern "C" void main() {
+	printf("vimixOS\n");
 	//initalize system resources
 	initialize();
-	printf("vimixOS testing\n");
-	printf("C:>");
+	printf(">_");
 	return;
 }
