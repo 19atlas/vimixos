@@ -3,7 +3,7 @@
 #include"stdio.h"
 #include"fs.h"
 
-//inizializza le componenti del gestore d'avvio.
+//init
 void initialize() {
 	initialize_fs();
 	return;

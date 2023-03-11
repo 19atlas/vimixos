@@ -5,29 +5,28 @@
 #include<stdint.h>
 #include<stdarg.h>
 
-//posizione del cursore.
-uint16_t x_pos = 0x0000, y_pos = 0x0000;
-//colore del testo.
+uint16_t x_pos = 0x0000, y_pos = 0x0000;  //cursor position.
+//text color.
 uint8_t color = 0x07;
 //colore di sfondo del testo.
 uint8_t bg_color = 0x00;
 
-//indirizzo di memoria della modalita` testo 0x03.
+//text mode memory address 0x03.
 uint32_t* video_memory = (uint32_t*)0x000B8000;
 
-//imposta il colore del testo.
+//set the text color.
 void set_color(uint8_t new_color) {
 	color = new_color;
 	return;
 }
 
-//imposta il colore di sfondo del testo.
+//set the background color of the text.
 void set_bg_color(uint8_t new_color) {
 	bg_color = new_color;
 	return;
 }
 
-//scorre il testo giu` di una riga.
+//scrolls text down one line.
 void scroll() {
 	uint8_t attribute = (0x00 << 0x04) | (0x0F & 0x0F);
 	uint16_t blank = 0x0020 | (attribute << 0x0008);
@@ -41,7 +40,7 @@ void scroll() {
 	return;
 }
 
-//aggiorna la posizione del cursore sullo schermo.
+//updates the position of the cursor on the screen.
 void update_cursor_pos(uint16_t x, uint16_t y) {
 	uint16_t cursor_pos = y * 0x0050 + x;
 	outb(0x03D4, 0x0F);
@@ -51,7 +50,7 @@ void update_cursor_pos(uint16_t x, uint16_t y) {
 	return;
 }
 
-//scrive un carattere sullo schermo avanzando la posizione del cursore.
+//writes a character on the screen by advancing the cursor position.
 void putc(unsigned char c){
 	uint16_t attrib = (0 << 4) | (color & 0x0F);
 	volatile uint16_t* where;
@@ -69,7 +68,7 @@ void putc(unsigned char c){
 	return;
 }
 
-//rimuove un carattere sullo schermo retrocedendo la posizione del cursore.
+//removes a character on the screen by moving the cursor back.
 void putcback(){
 	uint16_t attrib = (0 << 4) | (color & 0x0F);
 	volatile uint16_t * where;
@@ -87,7 +86,7 @@ void putcback(){
 	}
 }
 
-//scrive una stringa sullo schermo avanzando la posizione del cursore.
+//writes a string to the screen by advancing the cursor position.
 void puts(char* string){
 	uint16_t i;
 	while(*string){
@@ -114,7 +113,7 @@ void puts(char* string){
 	return;
 }
 
-//scrive una stringa ricca sullo schermo avanzando la posizione del cursore.
+//writes a rich string to the screen by advancing the cursor position.
 void printf(char* format, ...) {
 	va_list ap;
 	va_start(ap, format);

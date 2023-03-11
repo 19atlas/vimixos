@@ -4,10 +4,10 @@
 #include"isr.h"
 #include"ports.h"
 
-//attimi passati.
+//moments past.
 uint32_t tick = 0;
 
-//funzione per ottenere un numero casuale dato il valore massimo.
+//function to obtain a random number given the maximum value.
 int random (int numLimit) {
     static int randSeed, needsInit = 1;
     if (needsInit) {
@@ -18,12 +18,12 @@ int random (int numLimit) {
     return (randSeed % numLimit) + 1;
 }
 
-//funzione di gestione dell'orologio.
+//clock management function.
 static void timer_callback(registers_t regs) {
 	tick++;
 }
 
-//funzione di inizializzazione dell'orologio.
+//clock initialization function.
 void initialize_timer(uint32_t frequency) {
 	register_interrupt_handler(IRQ0, &timer_callback);
 	uint32_t divisor = 1193180 / frequency;

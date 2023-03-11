@@ -1,4 +1,4 @@
 #pragma once
 
-//funzione per abilitare l'ESS.
+//function to enable the SSE https://wiki.osdev.org/SSE
 extern "C" void enable_sse();

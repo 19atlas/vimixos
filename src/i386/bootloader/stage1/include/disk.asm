@@ -1,26 +1,21 @@
-;funzione della lettura dal disco.
+;function of reading from disk.
 disk_read:
-
-	;leggi i dati dal disco con i parametri dati all'indirizzo di memoria specificato.
-	mov ah, 0x02					;funzione per la lettura dal disco.
-	mov ch, 0x00					;numero del cilindro del disco.
-	mov dh, 0x00					;numero della testina del disco.
-	push 0x0000						;es contiene il segmento di memoria.
+	;read data from the disk with the given parameters at the specified memory address.
+	mov ah, 0x02					;function for reading from disk.
+	mov ch, 0x00					;disk cylinder number.
+	mov dh, 0x00					;disk head number.
+	push 0x0000						;es contains the memory segment.
 	pop es
-	;chiama l'interruttore 0x13 per leggere dal disco con i parametri dati.
+	;calls switch 0x13 to read from disk with given parameters.
 	int 0x13
-	;ad una lettura con successo il registro ah e` uguale a zero.
+	;on a successful read the ah register equals zero.
 	cmp ah, 0x00
-	;se non lo e` salta all'etichetta disk_read_error.
+	;if not, jump to the disk_read_error label.
 	jne disk_read_error
-	;ritorna a dove e` stata chiamata la funzione disk_read.
+	;returns to where the disk_read function was called.
 	ret
 
-;funzione per scrivere '!' se si e` verificato un errore durante la lettura dal disco.
+;if unsuccessful print error
 disk_read_error:
-
-	mov ah, 0x0E					;funzione per la scrittura di caratteri sullo schermo.
-	mov al, 0x21					;il carattere '!' in esadecimale e` 0x21.
-	int 0x10
-	;ritorna a dove e` stata chiamata la funzione disk_read.
-	ret
+	call hataYaz
+	hlt

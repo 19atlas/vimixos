@@ -14,5 +14,6 @@ void initialize() {
 	initialize_keyboard();
 	initialize_timer(1.1931816666);
 	initialize_rtc();
+	//initialize_mouse();
 	return;
 }

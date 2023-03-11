@@ -5,75 +5,55 @@
 #include"ata.h"
 #include<stdint.h>
 
-//struttura del blocco dei parametri del SIEB.
+//structure of the parameter block of the SIEB.
 struct bios_parameter_block {
-	//salto corto e nop.
-	uint8_t NOP[0x03];
-	//codice del produttore di apparecchiature originali.
-	uint8_t BPB_OEM[0x08];
-	//numero di octeti per settore.
-	uint16_t BPB_BYTES_PER_SECTOR;
-	//numero di settori per gruppo.
-	uint8_t BPB_SECTORS_PER_CLUSTER;
-	//numero di settori riservati.
-	uint16_t BPB_RESERVED_SECTORS;
-	//numero di tavole di allocazione dei dati.
-	uint8_t BPB_FAT_NUMBER;
-	//numero di entrate nel percorso radice.
-	uint16_t BPB_DIR_ENTRIES_NUMBER;
-	//numero di settori totale.
-	uint16_t BPB_TOTAL_SECTORS;
-	//codice del tipo di dispositivo di memoria.
-	uint8_t BPB_MEDIA_DESCRIPTOR_TYPE;
-	//numero di settori per tavola di allocazione dei dati.
-	uint16_t BPB_SECTORS_PER_FAT;
-	//numero di settori per traccia.
-	uint16_t BPB_SECTORS_PER_TRACK;
-	//numero di testine.
-	uint16_t BPB_HEAD_NUMBER;
-	//numero di settori nascosti.
-	uint32_t BPB_HIDDEN_SECTORS;
-	//numero di settori larghi.
-	uint32_t BPB_LARGE_SECTOR_NUMBER;
+	uint8_t NOP[0x03];  //short jump and nop.
+	uint8_t BPB_OEM[0x08];  //original equipment manufacturer code.
+	uint16_t BPB_BYTES_PER_SECTOR;  //number of octets per sector.
+	uint8_t BPB_SECTORS_PER_CLUSTER;  //number of sectors per group.
+	uint16_t BPB_RESERVED_SECTORS;  //number of reserved sectors.
+	uint8_t BPB_FAT_NUMBER;  //number of data allocation tables.
+	uint16_t BPB_DIR_ENTRIES_NUMBER;  //number of entries in the root path.
+	uint16_t BPB_TOTAL_SECTORS;  //total number of sectors.
+	uint8_t BPB_MEDIA_DESCRIPTOR_TYPE;  //memory device type code.
+	uint16_t BPB_SECTORS_PER_FAT;  //number of sectors per data allocation table.
+	uint16_t BPB_SECTORS_PER_TRACK;  //number of sectors per track.
+	uint16_t BPB_HEAD_NUMBER;   //number of heads.
+	uint32_t BPB_HIDDEN_SECTORS;   //number of hidden sectors.
+	uint32_t BPB_LARGE_SECTOR_NUMBER;   //number of wide sectors.
 } __attribute((packed));
 
-//struttura della traccia d'avvio estesa.
+//extended boot track structure.
 struct extended_boot_record {
-	//numero di identificazione del dispositivo di memoria.
-	uint8_t EBR_DRIVE_NUMBER;
-	//riservato.
+	uint8_t EBR_DRIVE_NUMBER;//identification number of the storage device.
 	uint8_t EBR_RESERVED;
-	//firma.
-	uint8_t EBR_SIGNATURE;
-	//numero di identificazione del volume.
-	uint32_t EBR_VOLUME_ID;
-	//nome del volume.
-	uint8_t EBR_VOLUME_LABEL[0x0B];
-	//stringa di identificazione del tipo di struttura del disco.
-	uint8_t EBR_SYSTEM_ID;
+	uint8_t EBR_SIGNATURE; //signature.
+	uint32_t EBR_VOLUME_ID; //volume identification number
+	uint8_t EBR_VOLUME_LABEL[0x0B]; //volume name
+	uint8_t EBR_SYSTEM_ID; //disk structure type identification string.
 } __attribute((packed));
 
-//dichiara un puntatore alla struttura del blocco dei parametri del SIEB.
+//declares a pointer to the structure of the SIEB's parameter block.
 bios_parameter_block* bpb;
-//dichiara un puntatore alla struttura della traccia d'avvio estesa.
+//declares a pointer to the extended boot trace structure.
 extended_boot_record* ebr;
 
-//funzione della lettura della tavola di allocazione dei dati.
+//function of reading the data allocation table.
 void read_fat() {
-	//leggi la tavola di allocazione dei dati.
+	//read the data allocation table.
 	read_sectors(0x20000, bpb->BPB_RESERVED_SECTORS, bpb->BPB_FAT_NUMBER * bpb->BPB_SECTORS_PER_FAT);
 	return;
 }
 
-//funzione della lettura del percorso radice.
+//function of reading the root path.
 void read_root_dir() {
-	//leggi il percorso radice.
+	//read the root path.
 	read_sectors(0x30000, bpb->BPB_RESERVED_SECTORS + bpb->BPB_FAT_NUMBER * bpb->BPB_SECTORS_PER_FAT,
 	(bpb->BPB_DIR_ENTRIES_NUMBER * 32 + bpb-> BPB_BYTES_PER_SECTOR -1) / bpb->BPB_BYTES_PER_SECTOR);
 	return;
 }
 
-//funzione di inizializzazione della struttura del disco.
+//disk structure initialization function.
 void initialize_fs() {
 	bpb = (bios_parameter_block*)0x00007C00;
 	ebr = (extended_boot_record*)0x00007C24;

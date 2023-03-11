@@ -1,11 +1,11 @@
 #pragma once
 
-//memoria per l'ingresso della tastiera.
+//klavye girişi için bellek.
 char* buffer;
 int _buf = 0;
 
-//funzione per disabilitare gli interruttori.
+//anahtarları devre dışı bırakma işlevi.
 extern "C" void disable_ints();
 
-//funzione per abilitare gli interruttori.
+//anahtarları etkinleştirme işlevi.
 extern "C" void enable_ints();

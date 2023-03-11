@@ -3,7 +3,7 @@
 #include<stdint.h>
 #include<stdbool.h>
 
-//converte un numero in una stringa.
+//converts a number to a string.
 char* int_to_string(unsigned int num, int base) { 
 	static char repr[]= "0123456789ABCDEF";
 	static char buffer[50]; 
@@ -20,7 +20,7 @@ char* int_to_string(unsigned int num, int base) {
 	return(ptr); 
 }
 
-//compara due stringhe.
+//compare two strings.
 bool compare_strings(const char* string1, const char* string2) {
 	while(*string1!=0) {
 		if(*string1 != *string2)
@@ -31,7 +31,7 @@ bool compare_strings(const char* string1, const char* string2) {
 	return true;
 }
 
-//compara due stringhe e se sono diverse ritorna falso.
+//compares two strings and returns false if they are different.
 bool compare_strings_ws(const char* string1, const char* string2) {
 	while(1) {
 		if(*string1==0 && *string2!=0)
@@ -46,8 +46,7 @@ bool compare_strings_ws(const char* string1, const char* string2) {
 	return true;
 }
 
-//svuota una stringa.
-void clear_string(char* string) {
+void clear_string(char* string) {  //empties a string.
 	while(*string != 0) {
 		*string = 0;
 		string++;
@@ -55,8 +54,7 @@ void clear_string(char* string) {
 	return;
 }
 
-//ritorna la lunghezza di una stringa.
-int string_size(char* string) {
+int string_size(char* string) {  //returns the length of a string.
 	int counter = 0;
 	while(*string != 0) {
 		string++;

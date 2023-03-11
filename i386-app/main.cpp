@@ -13,11 +13,9 @@
 #include"include/math.h"
 #include"include/pic.h"
 
-//funzione globale principale main.
+//main global function main.
 extern "C" void main() {
-	//inizializza le componenti del sistema operativo.
+	//initializes the operating system components.
 	initialize();
-	//scrivi "ciao mondo" sullo schermo.
-	printf("Hello, world!.\n");
 	return;
 }

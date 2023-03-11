@@ -4,13 +4,13 @@
 #include"include/fs.h"
 #include"include/fat12.h"
 
-//funzione globale principale bootloader.
+//bootloader main global function.
 extern "C" void bootloader() {
-	//inizializza le componenti.
+	//initialize the components.
 	initialize();
-	//leggi il dato kernel.bin cioe` il nucleo del sistema operativo.
+	//read the data kernel.bin ie the core of the operating system.
 	fread("KERNEL  BIN", 0x0100000);
-	//salta all'indirizzo dove e` stato caricato il nucleo ed eseguilo.
+	//jump to the address where the kernel was loaded and run it.
 	void(*kernel)(void) = (void(*)())0x0100000;
 	kernel();
 	return;

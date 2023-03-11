@@ -1,9 +1,9 @@
 [BITS 32]
-;importa da kernel.cpp la funzione main.
+;import the main function from kernel.cpp.
 [EXTERN main]
-;chiama la funzione main.
+;call the function main.
 call main
-;crea un ciclo infinito saltando all'indirizzo di memoria corrente.
+;creates an infinite loop by jumping to the current memory address.
 jmp $
 
 [GLOBAL memcpy_sse]

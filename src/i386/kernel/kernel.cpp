@@ -13,12 +13,11 @@
 #include"include/math.h"
 #include"include/pic.h"
 
-//funzione globale principale main.
+//main function
 extern "C" void main() {
-	//inizializza le componenti del sistema operativo.
+	//initalize system resources
 	initialize();
-	//scrivi "ciao mondo" sullo schermo.
-	printf("SOLE-i386.\n");
+	printf("vimixOS testing\n");
 	printf("C:>");
 	return;
 }

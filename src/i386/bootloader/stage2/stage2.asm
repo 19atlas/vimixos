@@ -1,7 +1,7 @@
 [BITS 32]
-;importa da bootloader.cpp la funzione bootloader.
+;import the bootloader function from bootloader.cpp.
 [EXTERN bootloader]
-;chiama la funzione bootloader.
+;call the bootloader function.
 call bootloader
-;crea un ciclo infinito saltando all'indirizzo di memoria corrente.
+;creates an infinite loop by jumping to the current memory address.
 jmp $

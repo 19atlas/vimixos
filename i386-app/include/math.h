@@ -1,48 +1,47 @@
 #pragma once
 
-//dichiarazione delle costanti.
+// declaration of constants.
 const double PI          = 3.141592653589793;
 const double HALF_PI     = 1.570796326794897;
 const double DOUBLE_PI   = 6.283185307179586;
 const double SIN_CURVE_A = 0.0415896;
 const double SIN_CURVE_B = 0.00129810625032;
 
-//struttura di un vettore bidimensionale di numeri interi.
+//structure of a two-dimensional vector of integers.
 struct vec2i {
 	int x, y;
 };
 
-//struttura di un vettore tridimensionale di numeri interi.
+//structure of a three-dimensional vector of integers.
 struct vec3i {
 	int x, y;
 };
 
-//struttura di un vettore bidimensionale di numeri razionali.
+//structure of a two-dimensional vector of rational numbers.
 struct vec2f {
 	float x, y;
 };
 
-//struttura di un vettore tridimensionale di numeri razionali.
+//structure of a three-dimensional vector of rational numbers.
 struct vec3f {
 	float x, y;
 };
 
-//funzione per trovare il valore assoluto di un numero intero.
+//function to find the absolute value of an integer.
+//#define abs(x) (if(x<0) -x; x)
 int abs(int x) {
 	if(x < 0)
 		return -x;
 	return x;
 }
 
-//funzione per trovare il segno di un numero intero.
-int sgn(int x) {
+int sgn(int x) {  //function to find the sign of an integer.
 	if(x < 0)
 		return -1;
 	return 1;
 }
 
-//funzione per trovare la radice quadrata di un numero razionale.
-float sqrt(float number) {
+float sqrt(float number) {  //function to find the square root of a rational number.
     int start = 0, end = number;
     int mid;
     float ans;
@@ -72,7 +71,7 @@ float sqrt(float number) {
     return ans;
 }
 
-//funzione per calcolare la potenza di una base data con un esponente dato.
+//function to compute the power of a given base with a given exponent.
 int pow(int base, int exponent) {
     int result = 1;
     for (;;) {
@@ -86,7 +85,7 @@ int pow(int base, int exponent) {
 	return result;
 }
 
-//funzione per il calcolo del coseno.
+//function for calculating the cos.
 double cos(double x) {
     if (x < 0) {
         int q = -x / DOUBLE_PI;
@@ -115,7 +114,7 @@ double cos(double x) {
     else return -r;
 }
 
-//funzione per il calcolo del seno.
+//sin calculation function.
 double sin(double x) {
     return cos(x - HALF_PI);
 }

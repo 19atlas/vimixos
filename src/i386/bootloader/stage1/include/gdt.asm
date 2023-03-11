@@ -1,3 +1,4 @@
+;https://wiki.osdev.org/Global_Descriptor_Table
 gdt_start:
 
 gdt_null:

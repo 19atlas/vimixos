@@ -15,13 +15,13 @@ typedef struct {
 time_t time;
 bool bcd;
 
-//funzione per scrivere nei registri dell'orologio del tempo reale.
+//function to write to real time clock registers.
 char read_register(unsigned char reg) {
 	outb(0x70, reg);
 	return inb(0x71);
 }
 
-//funzione per leggere dai registri dell'orologio del tempo reale.
+//function to read from real time clock registers.
 void write_register(unsigned char reg, unsigned char value) {
 	outb(0x70, reg);
 	outb(0x71, value);
@@ -35,7 +35,7 @@ void gettime(time_t *time) {
 	memcpy_sse(time, &time, sizeof(time_t));
 }
 
-//funzione della gestione dell'orologio del tempo reale.
+//real time clock management function.
 void rtc_handler(registers_t regs) {
 	if(read_register(0x0C) & 0x10){
 		if(bcd){
@@ -58,7 +58,7 @@ void rtc_handler(registers_t regs) {
 	}
 }
 
-//funzione dell'inizializzazione dell'orologio del tempo reale.
+//real time clock initialization function.
 void initialize_rtc() {
 	unsigned char status; 
 	status = read_register(0x0B);

@@ -6,13 +6,15 @@
 #include"keyboard.h"
 #include"timer.h"
 #include"rtc.h"
+#include"mouse.h"
 
-//inizializza le componenti del gestore d'avvio.
+//initialize the boot manager components.
 void initialize() {
 	initialize_fs();
 	initialize_dt();
 	initialize_keyboard();
 	initialize_timer(1.1931816666);
 	initialize_rtc();
+	//initialize_mouse();
 	return;
 }

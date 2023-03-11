@@ -5,10 +5,9 @@
 #include"system.h"
 #include"rtc.h"
 #include"fat12.h"
-
 #include<stdint.h>
 
-//lista dei tasti minuscoli.
+//lowercase key list. (trq)
 const char sc_table[] ={
 	0x00, 0x00, '1', '2',
 	'3', '4', '5', '6',
@@ -16,23 +15,23 @@ const char sc_table[] ={
 	'-', '=', 0x00, 0x00,
 	'q', 'w', 'e', 'r',
 	't', 'y', 'u', 'i',
-	'o', 'p', '[', ']',
+	'o', 'p', 'g', 'u',
 	0x00, 0x00, 'a', 's',
 	'd', 'f', 'g', 'h',
-	'j', 'k', 'l', ';',
-	'\'', 'i', 0x00, '\\',
+	'j', 'k', 'l', 's',
+	'i', ',', 0x00, '\\',
 	'z', 'x', 'c', 'v',
-	'b', 'n', 'm', ',',
-	'.', '/', 0x00, '*',
+	'b', 'n', 'm', 'o',
+	'c', '.', 0x00, '*',
 	0x00, ' '
 };
 
-//lista dei tasti maiuscoli.
+//shift key list.
 const char sc_tableC[] ={
 	0x00, 0x00, '!', '@',
-	'#', '$', '%', '^',
-	'&', '*', '(', ')',
-	'_', '+', 0x00, 0x00,
+	'^', '+', '%', '&',
+	'/', '(', ')', '=',
+	'?', '_', 0x00, 0x00,
 	'Q', 'W', 'E', 'R',
 	'T', 'Y', 'U', 'I',
 	'O', 'P', '{', '}',
@@ -50,23 +49,23 @@ int lshift = 0x00;
 int rshift = 0x00;
 
 void keyboard_handler(registers_t regs){
-	//ricava il tasto premuto.
+	//gets the key pressed.
 	uint8_t k = inb(0x60);
 	uint8_t c = 0x00;
-	//traduci il codice tastiera in una lettera carattere.
+	//translate the keyboard code into a letter character.
 	if(k < 0x3A)
 		c = sc_table[k];
-	//se la lettera premuta e` un carattere.
+	//if the pressed letter is a character.
 	if(c != 0x00){
-		//controlla se i tasti maiuscolo sono premuti.
+		//check if the shift keys are pressed.
 		switch(lshift | rshift){
-			case 0x01: //maiuscolo.
+			case 0x01: //uppercase.
 				buffer[_buf] = sc_tableC[k];
 				putc(sc_tableC[k]);
 				_buf++;
 				buffer[_buf] = 0x00;
 				break;
-			case 0x00: //minuscolo.
+			case 0x00: //lowercase.
 				buffer[_buf] = c;
 				putc(c);
 				_buf++;
@@ -74,42 +73,44 @@ void keyboard_handler(registers_t regs){
 				break;
 		}
 	} else {
-		//se il tasto premuto ha zero come valore controlla il codice.
+		//if the key pressed has zero as a value check the code.
 		switch(k){
-			//tasto cancella indietro.
-			case 0x0E:
+			case 0x0E:  //clear back key.
 				if(_buf!=0x00) {
-				_buf--;
-				buffer[_buf] = 0x00;
-				putcback();
+					_buf--;
+					buffer[_buf] = 0x00;
+					putcback();
 				}
 				break;
-			//tasto maiuscolo sinistro premuto.
-			case 0x2A:
+			
+			case 0x2A:  //left shift key pressed.
 				lshift = 0x01;
 				break;
-			//tasto maiuscolo sinistro rilasciato.
-			case 0xAA:
+			
+			case 0xAA:  //left shift key released.
 				lshift = 0x00;
 				rshift = 0x00;
 				break;
-			//tasto maiuscolo destro premuto.
-			case 0x36:
+			
+			case 0x36:  //right shift key pressed.
 				rshift = 0x01;
 				break;
-			//tasto maiuscolo destro rilasciato.
-			case 0xb6:
+			
+			case 0xb6:  //right shift key released.
 				lshift = 0x00;
 				rshift = 0x00;
 				break;
-			//blocco maiuscolo premuto.
-			case 0x3A:
-				if(lshift == 0x00)
+			
+			case 0x3A:  //caps lock pressed.
+				if(lshift == 0x00){
 					lshift = 0x01;
-				else lshift = 0x00;
+				}
+				else {
+					lshift = 0x00;
+				}
 				break;
-			//invio premuto.
-			case 0x1C:
+			
+			case 0x1C:  //enter pressed.
 				printf("\n");
 				if(compare_strings_ws("help", buffer) == true){
 					printf("help    - prints a list of available commands.\n");
@@ -143,9 +144,9 @@ void keyboard_handler(registers_t regs){
 	}
 }
 
-//funzione di inizializzazione della tastiera.
+//keyboard initialization function.
 void initialize_keyboard(){
-	//inizializza l'interruttore della tastiera.
+	//initialize the keyboard switch.
 	register_interrupt_handler(IRQ1, &keyboard_handler);
 	*buffer = 0;
 }

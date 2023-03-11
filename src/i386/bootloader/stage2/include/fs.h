@@ -5,9 +5,9 @@
 #include"ata.h"
 #include<stdint.h>
 
-//struttura del blocco dei parametri del SIEB.
+//structure of the parameter block of the SIEB.
 struct bios_parameter_block {
-	//salto corto e nop.
+	//short jump and nop.
 	uint8_t NOP[0x03];
 	//codice del produttore di apparecchiature originali.
 	uint8_t BPB_OEM[0x08];

@@ -5,7 +5,7 @@
 #include<stddef.h>
 #include<stdint.h>
 
-//struttura dell'entrata della tavola di descrizione globale.
+//global description table entry structure.
 struct gdt_entry_t {
 	uint16_t limit_low;
 	uint16_t base_low;
@@ -15,13 +15,13 @@ struct gdt_entry_t {
 	uint8_t  base_high;
 }__attribute__((packed));
 
-//struttura del puntatore della tavola di descrizione globale.
+//pointer structure of the global description table.
 struct gdt_ptr_t {
   uint16_t limit;
   uint32_t base;
 }__attribute__((packed));
 
-//struttura dell'entrata della tavola di descrizione degli interruttori.
+//switches description table entry structure.
 struct idt_entry_t {
 	uint16_t base_low;
 	uint16_t kernel_cs;
@@ -30,22 +30,22 @@ struct idt_entry_t {
 	uint16_t base_high;
 }__attribute__((packed));
 
-//struttura del puntatore della tavola di descrizione degli interruttori.
+//pointer structure of the switch description table.
 struct idt_ptr_t {
 	uint16_t limit;
 	uint32_t base;
 }__attribute__((packed));
 
-//dichiarazione delle variabili globali delle tavole di descrizione.
+//declaration of the global variables of the description tables.
 gdt_entry_t gdt_entries[5];
 gdt_ptr_t   gdt_ptr;
 idt_entry_t idt_entries[256];
 idt_ptr_t   idt_ptr;
 
-//funzione di scarico della tavola di descrizione globale.
+//global description table unload function.
 extern "C" void gdt_flush(uint32_t);
 
-//funzione di impostazione dei cancelli della tavola di descrizione globale.
+//function of setting the gates of the global description table.
 static void gdt_set_gate(int num, uint32_t base, uint32_t limit, uint8_t access, uint8_t gran){
 	gdt_entries[num].base_low    = (base & 0xFFFF);
 	gdt_entries[num].base_middle = (base >> 16) & 0xFF;
@@ -56,7 +56,7 @@ static void gdt_set_gate(int num, uint32_t base, uint32_t limit, uint8_t access,
 	gdt_entries[num].access      = access;
 }
 
-//funzione di inizializzazione della tavola di descrizione globale.
+//global description table initialization function.
 static void initialize_gdt(){
 	gdt_ptr.limit = (sizeof(gdt_entry_t) * 5) - 1;
 	gdt_ptr.base  = (uint32_t)&gdt_entries;
@@ -68,7 +68,7 @@ static void initialize_gdt(){
 	gdt_flush((uint32_t)&gdt_ptr);
 }
 
-//gestori dei servizi degli interruttori.
+//switch service managers.
 extern "C" void isr0();
 extern "C" void isr1();
 extern "C" void isr2();
@@ -118,10 +118,10 @@ extern "C" void irq13();
 extern "C" void irq14();
 extern "C" void irq15();
 
-//funzione di scarico della tavola di descrizione degli interruttori.
+//download function of the switch description table.
 extern "C" void idt_flush(uint32_t);
 
-//funzione di impostazione dei cancelli della tavola di descrizione degli interruttori.
+//switch description table gate setting function.
 static void idt_set_gate(uint8_t num, uint32_t base, uint16_t sel, uint8_t flags){
 	idt_entries[num].base_low  = base & 0xFFFF;
 	idt_entries[num].base_high = (base >> 16) & 0xFFFF;
@@ -130,7 +130,7 @@ static void idt_set_gate(uint8_t num, uint32_t base, uint16_t sel, uint8_t flags
 	idt_entries[num].flags     = flags;
 }
 
-//funzione di impostazione dei cancelli della tavola di descrizione degli interruttori.
+//switch description table gate setting function.
 static void initialize_idt(){
 	idt_ptr.limit = sizeof(idt_entry_t) * 256 - 1;
 	idt_ptr.base  = (uint32_t)&idt_entries;
@@ -196,7 +196,7 @@ static void initialize_idt(){
 	idt_flush((uint32_t)&idt_ptr);
 }
 
-//funzione di inizializzazione delle tavole di descrizione.
+//description table initialization function.
 void initialize_dt(){
 	initialize_gdt();
 	initialize_idt();

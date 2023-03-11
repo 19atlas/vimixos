@@ -1,9 +1,9 @@
 [BITS 32]
-;import kernel.cpp yukle
+;kernel.cpp yukle
 [EXTERN main]
-;chiama la funzione main.
+;main fonction
 call main
-;crea un ciclo infinito saltando all'indirizzo di memoria corrente.
+;creates an infinite loop by jumping to the current memory address.
 jmp $
 
 [GLOBAL memcpy_sse]

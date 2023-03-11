@@ -3,7 +3,7 @@
 #include<stdint.h>
 #include<stdbool.h>
 
-//converte un numero in una stringa.
+//bir sayıyı bir diziye dönüştürür.
 char* int_to_string(unsigned int num, int base) { 
 	static char repr[]= "0123456789ABCDEF";
 	static char buffer[50]; 
@@ -20,7 +20,7 @@ char* int_to_string(unsigned int num, int base) {
 	return(ptr); 
 }
 
-//compara due stringhe.
+//iki diziyi karşılaştırın.
 bool compare_strings(const char* string1, const char* string2) {
 	while(*string1!=0) {
 		if(*string1 != *string2)

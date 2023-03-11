@@ -5,29 +5,29 @@
 #include<stdint.h>
 #include<stdarg.h>
 
-//posizione del cursore.
+//imleç konumu.
 uint16_t x_pos = 0x0000, y_pos = 0x0000;
-//colore del testo.
+//metin rengi.
 uint8_t color = 0x07;
-//colore di sfondo del testo.
+//metin arka plan rengi.
 uint8_t bg_color = 0x00;
 
-//indirizzo di memoria della modalita` testo 0x03.
+//metin modu bellek adresi 0x03.
 uint32_t* video_memory = (uint32_t*)0x000B8000;
 
-//imposta il colore del testo.
+//metnin rengini ayarlayın.
 void set_color(uint8_t new_color) {
 	color = new_color;
 	return;
 }
 
-//imposta il colore di sfondo del testo.
+//metnin arka plan rengini ayarlar.
 void set_bg_color(uint8_t new_color) {
 	bg_color = new_color;
 	return;
 }
 
-//scorre il testo giu` di una riga.
+//metni bir satır aşağı kaydırır.
 void scroll() {
 	uint8_t attribute = (0x00 << 0x04) | (0x0F & 0x0F);
 	uint16_t blank = 0x0020 | (attribute << 0x0008);
@@ -41,7 +41,7 @@ void scroll() {
 	return;
 }
 
-//aggiorna la posizione del cursore sullo schermo.
+//imlecin ekrandaki konumunu günceller.
 void update_cursor_pos(uint16_t x, uint16_t y) {
 	uint16_t cursor_pos = y * 0x0050 + x;
 	outb(0x03D4, 0x0F);
@@ -51,7 +51,7 @@ void update_cursor_pos(uint16_t x, uint16_t y) {
 	return;
 }
 
-//scrive un carattere sullo schermo avanzando la posizione del cursore.
+//imleç konumunu ilerleterek ekrana bir karakter yazar.
 void putc(unsigned char c){
 	uint16_t attrib = (0 << 4) | (color & 0x0F);
 	volatile uint16_t* where;
@@ -69,7 +69,7 @@ void putc(unsigned char c){
 	return;
 }
 
-//rimuove un carattere sullo schermo retrocedendo la posizione del cursore.
+//imleci geri hareket ettirerek ekrandaki bir karakteri kaldırır.
 void putcback(){
 	uint16_t attrib = (0 << 4) | (color & 0x0F);
 	volatile uint16_t * where;
@@ -87,7 +87,7 @@ void putcback(){
 	}
 }
 
-//scrive una stringa sullo schermo avanzando la posizione del cursore.
+//imleç konumunu ilerleterek ekrana bir dizi yazar.
 void puts(char* string){
 	uint16_t i;
 	while(*string){
@@ -114,7 +114,7 @@ void puts(char* string){
 	return;
 }
 
-//scrive una stringa ricca sullo schermo avanzando la posizione del cursore.
+//imleç konumunu ilerleterek ekrana zengin bir dize yazar.
 void printf(char* format, ...) {
 	va_list ap;
 	va_start(ap, format);
