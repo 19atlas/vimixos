@@ -1,5 +1,8 @@
-elfgcc=tools/i386-elf/bin/i386-elf-gcc
-elfld=tools/i386-elf/bin/i386-elf-ld
+#elfgcc=tools/i386-elf/bin/i386-elf-gcc # installation from toolchain dir
+#elfld=tools/i386-elf/bin/i386-elf-ld
+
+elfgcc=i386-elf-gcc # installation from `yay -S i386-elf-gcc`
+elfld=i386-elf-ld
 BUILD_DIR=i386-bin
 
 .PHONY: help
@@ -31,6 +34,9 @@ build: $(clean)
 .PHONY: clean
 clean:
 	rm -rvf $(BUILD_DIR)/*
+.PHONY: setup
+setup:
+	./tools/toolchain
 
 .PHONY: run
 run:
