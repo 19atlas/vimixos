@@ -12,12 +12,18 @@
 #include"include/rtc.h"
 #include"include/math.h"
 #include"include/pic.h"
+#include"include/vga.h"
+
+#define MSIZE 48 * M
+#define GUI_MODE 0
+#define NETWORK_MODE 0
 
 //main function
-extern "C" void main() {
+extern "C" int main() {
 	printf("vimixOS\n");
 	//initalize system resources
 	initialize();
+	vga_init();
 	printf(">_");
-	return;
+	return 0;
 }

@@ -3,3 +3,4 @@ bin/
 *.out
 i386-bin/
 Mkfile.old
+.vscode/
