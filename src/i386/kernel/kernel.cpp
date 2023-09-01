@@ -14,9 +14,7 @@
 #include"include/pic.h"
 #include"include/vga.h"
 
-#define MSIZE 48 * M
 #define GUI_MODE 0
-#define NETWORK_MODE 0
 
 //main function
 extern "C" int main() {
