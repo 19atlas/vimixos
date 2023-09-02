@@ -15,6 +15,5 @@
 #include"include/vga.h"
 
 extern "C" void modules(){
-    printf("modules load xd");   
     initialize();
 }

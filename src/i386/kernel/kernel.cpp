@@ -6,13 +6,13 @@
 #include"include/memory.h"
 #include"include/dt.h"
 #include"include/isr.h"
+#include"include/vga.h"
 #include"include/keyboard.h"
 #include"include/mouse.h"
 #include"include/timer.h"
 #include"include/rtc.h"
 #include"include/math.h"
 #include"include/pic.h"
-#include"include/vga.h"
 
 #define GUI_MODE 0
 

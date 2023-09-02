@@ -1,7 +1,7 @@
 #pragma once
 
 //function to set a given part of memory to a destination with a value for a given length.
-void* memset (void *dest, int val, unsigned int len) {
+void* memset(void *dest, int val, unsigned int len) {
 	char* ptr = (char*)dest;
 	while (len-- > 0) *ptr++ = val;
 	return dest;

@@ -53,7 +53,14 @@ void clear_string(char* string) {  //empties a string.
 	}
 	return;
 }
-
+/*
+void restore_memory(long unsigned int* a){
+	while(a != 0x00){
+		a == 0x00;
+	}
+	return;
+}
+*/
 int string_size(char* string) {  //returns the length of a string.
 	int counter = 0;
 	while(*string != 0) {

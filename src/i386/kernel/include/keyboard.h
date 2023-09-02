@@ -6,6 +6,7 @@
 #include"rtc.h"
 #include"fat12.h"
 #include<stdint.h>
+//#include"vga.h"
 
 //lowercase key list. (trq)
 const char sc_table[] ={
@@ -132,7 +133,22 @@ void keyboard_handler(registers_t regs){
 					void (*app)(void) = (void (*)())0x150000;
 					app();
 				} else if(compare_strings_ws("echo", buffer) == true){
-					printf("echo");
+					printf("echo\n");
+				} else if(compare_strings_ws("clear", buffer) == true){
+					//clear function
+					int i=0;
+	
+					// empty text with white text.
+					signed char blankCell = string_size(" ");
+	
+					for (i = 0; i < 25; i++){
+    				  for (int j = 0; j < 80; j++) {
+        		    	video_memory[2 * (80 * i + j)] = '\0';
+        				video_memory[2 * (80 * i + j) + 1] = 0x0B;
+      				}
+    				}
+    				//initialize_keyboard();
+					//update_cursor_pos(0x00,0x00);
 				} else {
 					printf("Invalid command. Type help for a list of available commands.\n");
 				}
