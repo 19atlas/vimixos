@@ -8,7 +8,7 @@
 uint32_t tick = 0;
 
 //function to obtain a random number given the maximum value.
-int random (int numLimit) {
+int random(int numLimit) {
     static int randSeed, needsInit = 1;
     if (needsInit) {
         randSeed = tick;

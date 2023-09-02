@@ -149,6 +149,10 @@ void keyboard_handler(registers_t regs){
     				}
     				//initialize_keyboard();
 					//update_cursor_pos(0x00,0x00);
+				}else if(compare_strings_ws("poweroff", buffer) == true){
+					outw(0xB004, 0x2000);
+					outw(0x604, 0x2000);
+					outw(0x4004, 0x3400);
 				} else {
 					printf("'%s' komutu bulunamadi\n",buffer);
 				}
