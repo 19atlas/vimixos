@@ -124,7 +124,7 @@ void keyboard_handler(registers_t regs){
 						file = (file_entry*)mem;
 						if(file->size == 0)
 							break;
-						printf("%s %d bytes.\n", mem, file->size);
+						printf("%s %d bytes\n", mem, file->size);
 						mem += 32;
 					}
 				} else if(compare_strings_ws("time", buffer) == true) {
@@ -150,7 +150,7 @@ void keyboard_handler(registers_t regs){
     				//initialize_keyboard();
 					//update_cursor_pos(0x00,0x00);
 				} else {
-					printf("Invalid command. Type help for a list of available commands.\n");
+					printf("'%s' komutu bulunamadi\n",buffer);
 				}
 				clear_string(buffer);
 				_buf = 0;
