@@ -8,7 +8,7 @@
 uint16_t x_pos = 0x0000, y_pos = 0x0000;  //cursor position.
 //text color.
 uint8_t color = 0x07;
-//colore di sfondo del testo.
+//color of test
 uint8_t bg_color = 0x00;
 
 //text mode memory address 0x03.
