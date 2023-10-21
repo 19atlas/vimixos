@@ -17,6 +17,7 @@ i386 mimarili minimal işletim sistemi. (gerçi işletim sistemi denilebilirse)
 - [ ] akıllı saatlerde çalıştırma (imkansız)
 
 ## eklenmesi gerekenler:
+- [ ] FAT32 destegi
 - [ ] C++ desteği
 - [ ] UNIX-like
 - [ ] SHELL
