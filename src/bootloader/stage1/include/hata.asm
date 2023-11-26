@@ -15,4 +15,5 @@ hataYaz:
 .finish:
     hlt
     jmp $
+
 HataMsg: db "VIMIZ DISK HATASI",0x0D, 0x0a,"disk okunamiyor...", 0

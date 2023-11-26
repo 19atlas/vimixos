@@ -3,6 +3,7 @@
 
 elfgcc=i386-elf-gcc # installation from `yay -S i386-elf-gcc`
 elfld=i386-elf-ld
+
 BUILD_DIR=i386-bin
 
 .PHONY: build
@@ -10,13 +11,13 @@ build: $(clean)
 	export PATH=$PATH:/usr/local/i386elfgcc/bin
 	mkdir -pv $(BUILD_DIR)
 	@printf "\n\e[0;32m==> $(BUILD_DIR) e derleniyor..."
-	@nasm "src/i386/bootloader/stage1/stage1.asm" -f bin -o "$(BUILD_DIR)/stage1.bin"
-	@nasm "src/i386/bootloader/stage2/stage2.asm" -f elf -o "$(BUILD_DIR)/stage2.o"
-	@nasm "src/i386/kernel/kernel.asm" -f elf -o "$(BUILD_DIR)/kernel_asm.o"
-	@nasm "src/i386/kernel/modules.asm" -f elf -o "$(BUILD_DIR)/moduleAsm.o"
-	$(elfgcc) -ffreestanding -m32 -g -c -Wno-write-strings "src/i386/bootloader/stage2/bootloader.cpp" -o "$(BUILD_DIR)/bootloader.o"
-	$(elfgcc) -ffreestanding -m32 -g -c -Wno-write-strings "src/i386/kernel/kernel.cpp" -o "$(BUILD_DIR)/kernel_c.o"
-	$(elfgcc) -ffreestanding -m32 -g -c -Wno-write-strings "src/i386/kernel/modules.cpp" -o "$(BUILD_DIR)/modulesC.o"
+	@nasm "src/bootloader/stage1/stage1.asm" -f bin -o "$(BUILD_DIR)/stage1.bin"
+	@nasm "src/bootloader/stage2/stage2.asm" -f elf -o "$(BUILD_DIR)/stage2.o"
+	@nasm "src/kernel/kernel.asm" -f elf -o "$(BUILD_DIR)/kernel_asm.o"
+	@nasm "src/kernel/modules.asm" -f elf -o "$(BUILD_DIR)/moduleAsm.o"
+	$(elfgcc) -ffreestanding -m32 -g -c -Wno-write-strings "src/bootloader/stage2/bootloader.cpp" -o "$(BUILD_DIR)/bootloader.o"
+	$(elfgcc) -ffreestanding -m32 -g -c -Wno-write-strings "src/kernel/kernel.cpp" -o "$(BUILD_DIR)/kernel_c.o"
+	$(elfgcc) -ffreestanding -m32 -g -c -Wno-write-strings "src/kernel/modules.cpp" -o "$(BUILD_DIR)/modulesC.o"
 	$(elfld) -o "$(BUILD_DIR)/bootloader.bin" -T i386-bootloader.ld "$(BUILD_DIR)/stage2.o" "$(BUILD_DIR)/bootloader.o" --oformat binary
 	$(elfld) -o "$(BUILD_DIR)/kernel.bin" -T i386-kernel.ld "$(BUILD_DIR)/kernel_asm.o" "$(BUILD_DIR)/kernel_c.o" --oformat binary
 	$(elfld) -o "$(BUILD_DIR)/modules.bin" -T i386-module.ld "$(BUILD_DIR)/moduleAsm.o" "$(BUILD_DIR)/modulesC.o" --oformat binary

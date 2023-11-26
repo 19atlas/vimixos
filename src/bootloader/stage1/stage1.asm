@@ -9,7 +9,7 @@ jmp short _bootloader
 nop
 
 ;SIEB parameter block.
-BPB_OEM:					db 'VIMIZ   '
+BPB_OEM:					db 'VIMIZ OS'
 BPB_BYTES_PER_SECTOR:		dw 0x0200
 BPB_SECTORS_PER_CLUSTER:	db 0x01
 BPB_RESERVED_SECTORS:		dw 0x000A
@@ -52,10 +52,10 @@ _bootloader:
 	jmp _bootloader16				;jump to the _bootloader16 label.
 
 ;include files
-%INCLUDE"src/i386/bootloader/stage1/include/disk.asm"
-%INCLUDE"src/i386/bootloader/stage1/include/gdt.asm"
-%INCLUDE"src/i386/bootloader/stage1/include/protected_mode.asm"
-%INCLUDE"src/i386/bootloader/stage1/include/hata.asm" ;for error screen
+%INCLUDE"src/bootloader/stage1/include/disk.asm"
+%INCLUDE"src/bootloader/stage1/include/gdt.asm"
+%INCLUDE"src/bootloader/stage1/include/protected_mode.asm"
+%INCLUDE"src/bootloader/stage1/include/hata.asm" ;for error screen
 
 ;fill the rest of the sector excluding the last two octets with 0s.
 TIMES 510-($-$$) DB 0x00
