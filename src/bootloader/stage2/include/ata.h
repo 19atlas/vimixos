@@ -41,7 +41,7 @@ void read_sectors(uint32_t address, uint32_t lba, uint8_t sector_count) {
 	return;
 }
 
-//disk writing function.
+//disk writing
 void write_sectors(uint32_t lba, uint8_t sector_count, uint32_t* bytes) {
 	//wait for the disk to be ready and free to read.
 	ATA_wait_BSY();
@@ -51,7 +51,7 @@ void write_sectors(uint32_t lba, uint8_t sector_count, uint32_t* bytes) {
 	outb(0x01F3, (uint8_t)lba);
 	outb(0x01F4, (uint8_t)(lba >> 8));
 	outb(0x01F5, (uint8_t)(lba >> 16));
-	//invia il segnale di scrittura.
+	//sends write signal.
 	outb(0x01F7, 0x30);
 	for(uint32_t i = 0x00; i < sector_count; i++) {
 		ATA_wait_BSY();
