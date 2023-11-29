@@ -1,20 +1,21 @@
 # vimixOS
 i386 mimarili minimal işletim sistemi. (gerçi işletim sistemi denilebilirse)
+<br>[for english version](https://github.com/19atlas/vimixos/blob/main/README_EN.md)
 ## Derlemek için,
 ### küçük not: Fedora, Gentoo, Debian tabanlı ve Arch tabanlı sistemlerde denenmiştir.
 - `make setup` komutuyla derleyici kurulacaktır.
 - kurulduğunda `make clean build` komutunu çalıştırın.
 
 ## Sıra çalıştırmada!
-- öncelikle gereken paketleri kurmalısınız `qemu-full` `qemu-headless-arch-extra` paketi gibi [daha fazla bilgi için](https://github.com/nanobyte-dev/nanobyte_os#building)
-- [X] ana dizinde "make run" komutunu çalıştırın.
+- öncelikle gereken paketleri kurmalısınız <br>`nasm`<br>`qemu-full`<br>`qemu-headless-arch-extra`<br> paketleri gibi [daha fazla bilgi için](https://github.com/nanobyte-dev/nanobyte_os#building)
+- `make run` komutu ile qemuyu açın.
 
 ## Vimixos hedefleri:
-- [ ] stabilite (cidden)
+- [ ] stabilite (cidden zor)
 - [ ] uygun bir shell
 - [ ] çok uzun zaman sonra uygulama geliştirme (DEler yazma programları vs.)
 - [ ] internet
-- [ ] akıllı saatlerde çalıştırma (imkansız)
+- [ ] akıllı saatlere portlama (imkansız)
 
 ## eklenmesi gerekenler:
 - [ ] FAT32 destegi
@@ -24,12 +25,12 @@ i386 mimarili minimal işletim sistemi. (gerçi işletim sistemi denilebilirse)
 
 ## Vimixos dizinleri
 - `i386-bin` vimixos derlendikten sonra çıktıyı buraya atar
-- `src/i386` vimixos kaynağı
-- `src/i386/kernel` viniz kerneli burda bulunur
-- `src/i386/bootloader` vimixos bootloader
-- `tools` klasorundeki `toolchain` dosyası vimixos'a uygun binutils indirmesinde görevlidir.
+- `src` vimixos kaynağı
+- `src/kernel` viniz kerneli burda bulunur
+- `src/bootloader` vimixos bootloader
+- `tools/toolchain` çalıştırılabilir dosyası vimixos'a uygun binutils ve derleyiciyi indirir.
 
-this project under the GPL LICENSE [see](https://www.gnu.org/licenses/rms-why-gplv3.html)
+BU PROJE GPL LİSANSI İLE LİSANSLANMIŞTIR [daha fazla bilgi için](https://www.gnu.org/licenses/rms-why-gplv3.html)
 
 
-![btw GPL bro](https://www.gnu.org/graphics/gplv3-with-text-136x68.png)
+![GPL kullan](https://www.gnu.org/graphics/gplv3-with-text-136x68.png)
