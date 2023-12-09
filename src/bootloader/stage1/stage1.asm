@@ -1,10 +1,10 @@
 [ORG 0x7C00]
 [BITS 16]
 
-;the memory address of the boot manager.
+;the boot manager memory address.
 BOOTLOADER_ADDRESS EQU 0x1000
 
-;jump short to the _bootloader label.
+;jump short to the _bootloader
 jmp short _bootloader
 nop
 
@@ -39,7 +39,7 @@ _bootloader:
 	;clear the screen by resetting the graphics mode.
 	mov ah, 0x00					;function for switching the graphics mode.
 	mov al, 0x03					;graphics mode 0x03 text 80x25 characters.
-	int 0x10 						;call the 0x10 switch to reset the graphics mode.
+	int 0x10 					;call the 0x10 switch to reset the graphics mode.
 
 	;loads the next sector at memory address 0x7E00.
 	;sets the parameters for the read from disk function.
@@ -49,9 +49,8 @@ _bootloader:
 
 	call disk_read					;calls the read from disk function.
 
-	jmp _bootloader16				;jump to the _bootloader16 label.
+	jmp _bootloader16				;jump to the _bootloader16
 
-;include files
 %INCLUDE"src/bootloader/stage1/include/disk.asm"
 %INCLUDE"src/bootloader/stage1/include/gdt.asm"
 %INCLUDE"src/bootloader/stage1/include/protected_mode.asm"
@@ -63,14 +62,13 @@ TIMES 510-($-$$) DB 0x00
 DW 0xAA55
 
 _bootloader16:
-	;imposta i registri dei segmenti.
+	;sets segment registers.
 	cli			;disable the switches.
 	mov ax, 0x0000
 	mov ds, ax
 	mov es, ax
 	mov ss, ax
 	mov sp, 0x7C00
-	
 	sti			;re-enable the switches.
 
 	;loads the boot manager at the memory address specified above.
@@ -103,7 +101,7 @@ _bootloader32:
 	mov ebp, 0x10000
 	mov esp, ebp
 
-	;jump to the boot manager memory address.
+	;jump to boot manager memory address.
 	jmp BOOTLOADER_ADDRESS
 
 ;fill the rest of the sector with 0.
