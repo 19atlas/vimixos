@@ -13,22 +13,25 @@ typedef struct regs {
 typedef void (*isr_t)(registers_t);
 void register_interrupt_handler(uint8_t n, isr_t handler); 
 
-#define IRQ0 32
-#define IRQ1 33
-#define IRQ2 34
-#define IRQ3 35
-#define IRQ4 36
-#define IRQ5 37
-#define IRQ6 38
-#define IRQ7 39
-#define IRQ8 40
-#define IRQ9 41
-#define IRQ10 42
-#define IRQ11 43
-#define IRQ12 44
-#define IRQ13 45
-#define IRQ14 46
-#define IRQ15 47
+#define IRQ_BASE_VECTOR 32
+#define IRQ_VECTOR_COUNT 16
+
+#define IRQ0 (IRQ_BASE_VECTOR + 0)
+#define IRQ1 (IRQ_BASE_VECTOR + 1)
+#define IRQ2 (IRQ_BASE_VECTOR + 2)
+#define IRQ3 (IRQ_BASE_VECTOR + 3)
+#define IRQ4 (IRQ_BASE_VECTOR + 4)
+#define IRQ5 (IRQ_BASE_VECTOR + 5)
+#define IRQ6 (IRQ_BASE_VECTOR + 6)
+#define IRQ7 (IRQ_BASE_VECTOR + 7)
+#define IRQ8 (IRQ_BASE_VECTOR + 8)
+#define IRQ9 (IRQ_BASE_VECTOR + 9)
+#define IRQ10 (IRQ_BASE_VECTOR + 10)
+#define IRQ11 (IRQ_BASE_VECTOR + 11)
+#define IRQ12 (IRQ_BASE_VECTOR + 12)
+#define IRQ13 (IRQ_BASE_VECTOR + 13)
+#define IRQ14 (IRQ_BASE_VECTOR + 14)
+#define IRQ15 (IRQ_BASE_VECTOR + 15)
 
 #define DIVIDE_BY_ZERO 0
 #define DEBUG 1
@@ -66,6 +69,32 @@ void register_interrupt_handler(uint8_t n, isr_t handler);
 isr_t interrupt_handlers[256];
 
 void register_interrupt_handler(uint8_t n, isr_t handler){ interrupt_handlers[n] = handler; }
+
+static const char* const irq_descriptions[IRQ_VECTOR_COUNT] = {
+	"Programmable interval timer",
+	"Keyboard controller",
+	"Cascade (legacy PIC)",
+	"COM2 serial port",
+	"COM1 serial port",
+	"LPT2 / sound card",
+	"Floppy disk controller",
+	"LPT1 / spurious interrupt",
+	"CMOS real-time clock",
+	"Legacy peripherals / ACPI",
+	"Legacy peripherals",
+	"Legacy peripherals",
+	"PS/2 mouse",
+	"FPU / coprocessor",
+	"Primary ATA channel",
+	"Secondary ATA channel"
+};
+
+static const char* irq_description(uint32_t int_no){
+	if(int_no < IRQ_BASE_VECTOR || int_no >= IRQ_BASE_VECTOR + IRQ_VECTOR_COUNT){
+		return "Unknown IRQ";
+	}
+	return irq_descriptions[int_no - IRQ_BASE_VECTOR];
+}
 
 extern "C" void isr_handler(registers_t regs){
 	set_color(0x4);
@@ -158,5 +187,13 @@ extern "C" void irq_handler(registers_t r){
 	if(interrupt_handlers[r.int_no] != 0){
 		isr_t handler = interrupt_handlers[r.int_no];
 		handler(r);
+	}else if(r.int_no >= IRQ_BASE_VECTOR && r.int_no < IRQ_BASE_VECTOR + IRQ_VECTOR_COUNT){
+		set_color(0xE);
+		printf(
+			"unhandled IRQ%d (int 0x%x): %s\n",
+			r.int_no - IRQ_BASE_VECTOR,
+			r.int_no,
+			irq_description(r.int_no)
+		);
 	}
 }
